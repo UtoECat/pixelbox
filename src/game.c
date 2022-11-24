@@ -72,10 +72,11 @@ int  (game_load) (struct box* b, const char* filename) {
 	}
 	debugf("World width = %i, world height = %i", b->w, b->h);
 	game_init(b, b->w, b->h);
-	sz = fread(b->arr, sizeof(struct pixel), b->w * b->h, f);
-	if (sz < b->w * b->h) {
+	size_t size = (size_t)b->w * b->h;
+	sz = fread(b->arr, sizeof(struct pixel), size, f);
+	if (sz < size) {
 		errorf("World is not fully readed! (%li)", sz);
-		errorf("But excepted size %li", sizeof(struct pixel) * b->w * b->h);
+		errorf("But excepted size %li", sizeof(struct pixel) * size);
 	}
 	fclose(f);
 	debugf("World [%i:%i] loaded from %s", b->w, b->h, filename);
@@ -94,10 +95,11 @@ int  (game_save) (struct box* b, const char* filename) {
 		errorf("Can't write world width :(");
 		fclose(f); return -2;
 	}
-	sz = fwrite(b->arr, sizeof(struct pixel), b->w * b->h, f);
-	if (sz < b->w * b->h) {
+	size_t size = (size_t)b->w * b->h;
+	sz = fwrite(b->arr, sizeof(struct pixel), size, f);
+	if (sz < size) {
 		errorf("World is not fully writed! (%li)", sz);
-		errorf("But excepted size %li", sizeof(struct pixel) * b->w * b->h);
+		errorf("But excepted size %li", sizeof(struct pixel) * size);
 	}
 	fclose(f);
 	debugf("World [%i:%i] saved to %s", b->w, b->h, filename);
