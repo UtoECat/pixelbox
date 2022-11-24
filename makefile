@@ -35,11 +35,17 @@ BUILD_START = $(shell date +%s)
 
 # targets
 
-.PHONY: all clean
+.PHONY: all clean test
 
 all : $(TARGET)
 	@echo "[MAKE] Sucess!"
 	@echo "[MAKE] Time elapsed (sec) : $(shell ./timediff.sh $(BUILD_START))"
+
+test: $(TARGET)
+	@echo "[MAKE] Sucess building!"
+	@$(RM) -f ./world.bin
+	@echo "[MAKE] Run executable with --test flag"
+	@$(TARGET) --test || test -f ./world.bin
 
 $(TARGET): $(OBJS)
 	@echo "[MAKE] Building target..."

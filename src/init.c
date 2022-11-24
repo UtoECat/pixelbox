@@ -111,7 +111,15 @@ void app_tick (void) {
 	window_tick();	
 }
 
-int main() {
+int app_test_mode = 0;
+
+int main(int argc, char** argv) {
+	for (int i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "--test") == 0) {
+			debugf("Test mode enabled!");
+			app_test_mode = 1;
+		}
+	}
 	debugf("Hello World!");
 
 	if (libs_init() != 0) {

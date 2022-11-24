@@ -71,6 +71,9 @@ static void control() {
 int  game_shader_init();
 void game_shader_free();
 
+extern int app_test_mode;
+int  (app_set_exit) (int i); 
+
 int  app_init (void) {
 	if (game_shader_init() != 0) {
 		errorf("Can't initialize game shader!");
@@ -97,6 +100,7 @@ void app_loop(void) {
 		glBindTexture(GL_TEXTURE_2D, 0);
 		draw_color(1,1,1);
 		draw_rect(app_mouse_x(), app_mouse_y(),10,10,1);
+		if (app_test_mode) app_set_exit(1);
 	};
 }
 
